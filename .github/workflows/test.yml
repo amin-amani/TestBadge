@@ -67,8 +67,8 @@ jobs:
           github_token: ${{ secrets.ACCESS_TOKEN }}
       - name: Create Build Archive
         run: |
-          cd src
-          zip -r build.zip BadgeProject/build
+          cd BadgeProject
+          zip -r build.zip build
       - name: Create Release
         uses: actions/create-release@v1
         id: create_release
