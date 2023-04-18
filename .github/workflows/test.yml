@@ -58,8 +58,36 @@ jobs:
         with:
          name: UI-binary
          path: BadgeProject/build 
-#       - name: Upload artifact
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: ${{ env.ARTIFACT }}
-#           path: BadgeProject/build/qt-planets-linux-build.AppImage
+
+# Create a zip archive of the build artifacts
+     # Get the latest release
+      - name: Delete latest release
+        uses: ame-yu/action-delete-latest-release@v2
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Create Build Archive
+        run: |
+          cd src
+          zip -r build.zip BadgeProject/build
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+         tag_name: v1.0.0 # Specify the tag name for the release
+         release_name: Release 1.0.0 # Specify a name for the release
+         body: 'This is the first release.' # Add a description for the release
+         
+         # Attach build artifacts to the release
+      - name: Attach Build Artifacts to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: BadgeProject/build.zip
+          asset_name: UI.zip
+          asset_content_type: application/zip
+          timeout-minutes: 10 # Increase the timeout value to 10 minutes
+
