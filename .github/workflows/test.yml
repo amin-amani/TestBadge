@@ -37,19 +37,22 @@ jobs:
 
       - name: Verify CMake version
         run: cmake --version
-
-      - name: Create build directory
-        run: |
-          mkdir /BadgeProject/build
      
-      - name: Configure CMake
+      - name: print output
         run: |
-          cd BadgeProject/build
-          cmake ..
-          make 
+          pwd
+#       - name: Create build directory
+#         run: |
+#           mkdir /BadgeProject/build
+     
+#       - name: Configure CMake
+#         run: |
+#           cd BadgeProject/build
+#           cmake ..
+#           make 
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.ARTIFACT }}
-          path: ${{ env.SOURCE_DIR }}/build/qt-planets-linux-build.AppImage
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: ${{ env.ARTIFACT }}
+#           path: ${{ env.SOURCE_DIR }}/build/qt-planets-linux-build.AppImage
