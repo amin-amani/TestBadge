@@ -8,7 +8,7 @@ on:
 env:
   SOURCE_DIR: ${{ github.workspace }}
   QT_VERSION: 5.14.0
-  ARTIFACT: qt-planets-linux-build.AppImage
+#   ARTIFACT: qt-planets-linux-build.AppImage
 
 jobs:
   build:
