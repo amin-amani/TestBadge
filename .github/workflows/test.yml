@@ -44,15 +44,15 @@ jobs:
           echo "------------------------------ "
           ls BadgeProject/
 
-#       - name: Create build directory
-#         run: |
-#           mkdir /BadgeProject/build
+      - name: Create build directory
+        run: |
+          mkdir BadgeProject/build
      
-#       - name: Configure CMake
-#         run: |
-#           cd BadgeProject/build
-#           cmake ..
-#           make 
+      - name: Configure CMake and build
+        run: |
+          cd BadgeProject/build
+          cmake ..
+          make 
 
 #       - name: Upload artifact
 #         uses: actions/upload-artifact@v2
