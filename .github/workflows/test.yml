@@ -29,6 +29,7 @@ jobs:
           modules: qtcharts qt3d
           setup-python: true
 
+
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.13
         with:
