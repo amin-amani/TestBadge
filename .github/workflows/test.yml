@@ -39,13 +39,12 @@ jobs:
 
       - name: Create build directory
         run: |
-          if [ ! -d "${{ env.SOURCE_DIR }}/build" ]; then
-            mkdir ${{ env.SOURCE_DIR }}/build
-          fi
+          mkdir /BadgeProject/build
+     
 
       - name: Configure CMake
         run: |
-          cd build
+          cd BadgeProject/build
           cmake ..
           make 
 
