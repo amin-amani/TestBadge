@@ -41,6 +41,8 @@ jobs:
       - name: print output
         run: |
           pwd
+          echo "------------------------------"
+          echo  ${{ github.workspace }}
 #       - name: Create build directory
 #         run: |
 #           mkdir /BadgeProject/build
