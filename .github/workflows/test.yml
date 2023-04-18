@@ -45,7 +45,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cd ${{ env.SOURCE_DIR }}/build
+          cd build
           cmake ..
           make 
 
