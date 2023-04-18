@@ -47,11 +47,9 @@ jobs:
         run: |
           cd ${{ env.SOURCE_DIR }}/build
           cmake ..
+          make 
 
-      - name: Build
-        run: |
-          cd ${{ env.SOURCE_DIR }}/build
-          cmake --build .
+
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
