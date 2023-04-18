@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - main
+env:
+ SOURCE_DIR:   ${{ github.workspace }}
+ QT_VERSION:   5.14.0
+ ARTIFACT:     qt-planets-linux-build.AppImage
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,10 +16,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Qt
-        uses: qmc/install@v0
+        uses: jurplel/install-qt-action@v2
         with:
-          qt-version: '5.15.2'
-          components: qtbase qtdeclarative qttools
+          version:      ${{ env.QT_VERSION }}
+          host:         linux
+          target:       desktop
+          arch:         gcc_64
+          dir:          ${{ runner.temp }}
+          modules:      qtcharts qt3d
+          setup-python: false
+              
+      - name: Create build directory
+        run:  mkdir ${{ env.SOURCE_DIR }}/build
 
 #       - name: Setup CMake
 #         uses: actions/setup-cmake@v2
