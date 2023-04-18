@@ -8,7 +8,7 @@ on:
 env:
   SOURCE_DIR: ${{ github.workspace }}
   QT_VERSION: 5.14.0
-#   ARTIFACT: qt-planets-linux-build.AppImage
+  ARTIFACT: qt-planets-linux-build.AppImage
 
 jobs:
   build:
@@ -53,9 +53,13 @@ jobs:
           cd BadgeProject/build
           cmake ..
           make 
-
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+         name: UI-binary
+         path: BadgeProject/build 
 #       - name: Upload artifact
 #         uses: actions/upload-artifact@v2
 #         with:
 #           name: ${{ env.ARTIFACT }}
-#           path: ${{ env.SOURCE_DIR }}/build/qt-planets-linux-build.AppImage
+#           path: BadgeProject/build/qt-planets-linux-build.AppImage
