@@ -26,10 +26,6 @@ jobs:
           modules:      qtcharts qt3d
           setup-python: true
               
-      - name: Create build directory
-        run:  mkdir ${{ env.SOURCE_DIR }}/build
-        
-        
 
       - name: Setup cmake
         uses: jwlawson/actions-setup-cmake@v1.13
