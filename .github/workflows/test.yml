@@ -68,6 +68,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
          token: ${{ secrets.CODECOV_TOKEN }}
+         files: BadgeProject/build/TestP/CMakeFiles/cal_test.dir
 
      # Get the latest release
       - name: Delete latest release
