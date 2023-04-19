@@ -58,6 +58,7 @@ jobs:
           cd TestP
           ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
           cd ..
+          pwd
           tree
           
       - name: Upload artifact
