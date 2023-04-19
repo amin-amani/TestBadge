@@ -67,8 +67,11 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
-         token: ${{ secrets.CODECOV_TOKEN }}
-         files: BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcda
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: |
+            BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcda
+            BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+            BadgeProject/TestP/tst_cal_test.cpp
 
      # Get the latest release
       - name: Delete latest release
