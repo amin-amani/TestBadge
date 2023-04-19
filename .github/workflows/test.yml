@@ -58,6 +58,7 @@ jobs:
           cd TestP
           ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
           cd ..
+          cd ..
           pwd
           tree
           
@@ -73,8 +74,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: |
-            BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcda
             BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+            BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcda
             BadgeProject/TestP/tst_cal_test.cpp
 
      # Get the latest release
