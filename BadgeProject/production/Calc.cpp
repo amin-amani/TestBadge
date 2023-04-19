@@ -2,6 +2,8 @@
 
 Calc::Calc(QObject *parent) : QObject(parent)
 {
+    //error
+    t=1
     qDebug()<<"constructor!!!!!!!!!!!!!!!!";
 }
 
