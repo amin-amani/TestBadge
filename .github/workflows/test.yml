@@ -57,6 +57,8 @@ jobs:
           make
           cd TestP
           ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
+          cd ..
+          tree
           
       - name: Upload artifact
         uses: actions/upload-artifact@v2
