@@ -1,0 +1,114 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SOURCE_DIR: ${{ github.workspace }}
+  QT_VERSION: 5.14.0
+  ARTIFACT: qt-planets-linux-build.AppImage
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+           
+
+      - name: Install Qt
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: linux
+          target: desktop
+          arch: gcc_64
+          dir: ${{ runner.temp }}/qt-5.14.0/
+          modules: qtcharts qt3d
+          setup-python: true
+          
+          
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.16.x'
+
+      - name: Verify CMake version
+        run: cmake --version
+     
+
+      - name: Create build directory
+        run: |
+          mkdir BadgeProject/build
+      
+
+        
+      - name: Configure CMake and build
+        run: |
+          cd BadgeProject/build
+          cmake ..
+          make
+          cd TestP
+          cd ..
+          cd ..
+          echo "check test file"
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/TestP/tst_cal_test.cpp
+          echo "check gcno"
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+          echo "check gcno ..."
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+          pwd
+          tree
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+         name: UI-binary
+         path: BadgeProject/build 
+
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: |
+            /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+            /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcda
+            /home/runner/work/TestBadge/TestBadge/BadgeProject/TestP/tst_cal_test.cpp
+     # Get the latest release
+      - name: Delete latest release
+        uses: ame-yu/action-delete-latest-release@v2
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+    # Create a zip archive of the build artifacts          
+      - name: Create Build Archive
+        run: |
+          cd BadgeProject
+          zip -r build.zip build
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+         tag_name: v1.0.0 # Specify the tag name for the release
+         release_name: Release 1.0.0 # Specify a name for the release
+         body: 'This is the first release.' # Add a description for the release
+         
+         
+         
+         # Attach build artifacts to the release
+      - name: Attach Build Artifacts to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: BadgeProject/build.zip
+          asset_name: UI.zip
+          asset_content_type: application/zip
+          timeout-minutes: 10 # Increase the timeout value to 10 minutes
