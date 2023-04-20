@@ -138,23 +138,23 @@ jobs:
           key: ${{ runner.os }}-qt-5.14.0-${{ github.sha }}
           
           
-      - name: Install Qt
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: jurplel/install-qt-action@v2
-        with:
-          version: ${{ env.QT_VERSION }}
-          host: linux
-          target: desktop
-          arch: gcc_64
-          dir: ${{ runner.temp }}/qt-5.14.0/
-          modules: qtcharts qt3d
-          setup-python: true
+#       - name: Install Qt
+#         if: steps.cache.outputs.cache-hit != 'true'
+#         uses: jurplel/install-qt-action@v2
+#         with:
+#           version: ${{ env.QT_VERSION }}
+#           host: linux
+#           target: desktop
+#           arch: gcc_64
+#           dir: ${{ runner.temp }}/qt-5.14.0/
+#           modules: qtcharts qt3d
+#           setup-python: true
 
 
-      - name: Setup CMake
-        uses: jwlawson/actions-setup-cmake@v1.13
-        with:
-          cmake-version: '3.16.x'
+#       - name: Setup CMake
+#         uses: jwlawson/actions-setup-cmake@v1.13
+#         with:
+#           cmake-version: '3.16.x'
 
       - name: Verify CMake version
         run: cmake --version
@@ -177,14 +177,5 @@ jobs:
           make
           cd TestP
           ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
-          cd ..
-          cd ..
-          echo "check test file"
-          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/TestP/tst_cal_test.cpp
-          echo "check gcno"
-          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
-          echo "check gcno ..."
-          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
-          pwd
-          tree
+
   
