@@ -15,6 +15,8 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void test_case1();
+    void test_case2();
+    void test_case3();
 
 };
 
@@ -44,7 +46,18 @@ void cal_test::test_case1()
     QVERIFY2(c2.Add(3,4)==7,"check sumation ");
 //    QVERIFY2(c2.Add(3,2)==1,"check sumation ");
 }
-
+void cal_test::test_case2()
+{
+    Calc c2;
+    QVERIFY2(c2.Add(10,5)==15,"check sumation ");
+//    QVERIFY2(c2.Add(3,2)==1,"check sumation ");
+}
+void cal_test::test_case3()
+{
+    Calc c2;
+    QVERIFY2(c2.Add(3,4)==1,"check sumation ");
+//    QVERIFY2(c2.Add(3,2)==1,"check sumation ");
+}
 QTEST_APPLESS_MAIN(cal_test)
 
 #include "tst_cal_test.moc"
