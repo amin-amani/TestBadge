@@ -23,9 +23,10 @@ jobs:
         with:
           path: ${{ runner.temp }}/qt-5.14.0/
           key: ${{ runner.os }}-qt-5.14.0-744fb7d7d57ae5a63ef33533ad43fba6b2421035 #${{ github.sha }}
+     
       - name: Set Qt installation directory
-        run: |
-              echo "::set-env name=QTDIR::${{ runner.temp }}/qt-5.14.0"     
+        run: echo "QTDIR=/home/runner/work/_temp/qt-5.14.0" >> $GITHUB_ENV     
+        
       - name: Use cached Qt installation
         run: |
              export PATH="${{ env.QTDIR }}/bin:$PATH"
