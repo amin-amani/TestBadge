@@ -24,7 +24,10 @@ jobs:
           path: ${{ runner.temp }}/qt-5.14.0/
           key: ${{ runner.os }}-qt-5.14.0-744fb7d7d57ae5a63ef33533ad43fba6b2421035 #${{ github.sha }}
           
-          
+      - name: Use cached Qt installation
+        run: |
+             export PATH="${{ env.QTDIR }}/bin:$PATH"
+             export LD_LIBRARY_PATH="${{ env.QTDIR }}/lib:$LD_LIBRARY_PATH"  
 #       - name: Install Qt
 #         if: steps.cache.outputs.cache-hit != 'true'
 #         uses: jurplel/install-qt-action@v2
