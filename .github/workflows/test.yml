@@ -17,8 +17,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+    
+      - name: Cache installed packages
+        uses: actions/cache@v2
+        with:
+               path: ${{ runner.temp }}/qt-5.14.0/
+               key: ${{ runner.os }}-qt-5.14.0
+          
+          
       - name: Install Qt
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: jurplel/install-qt-action@v2
         with:
           version: ${{ env.QT_VERSION }}
