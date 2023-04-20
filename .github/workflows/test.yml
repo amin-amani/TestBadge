@@ -21,8 +21,8 @@ jobs:
       - name: Cache installed packages
         uses: actions/cache@v2
         with:
-               path: ${{ runner.temp }}/qt-5.14.0/
-               key: ${{ runner.os }}-qt-5.14.0
+          path: ${{ runner.temp }}/qt-5.14.0/
+          key: ${{ runner.os }}-qt-5.14.0-${{ github.sha }}
           
           
       - name: Install Qt
@@ -63,7 +63,6 @@ jobs:
           cmake ..
           make
           cd TestP
-          ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
           cd ..
           cd ..
           echo "check test file"
@@ -125,3 +124,67 @@ jobs:
           asset_content_type: application/zip
           timeout-minutes: 10 # Increase the timeout value to 10 minutes
 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+    
+      - name: Cache installed packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.temp }}/qt-5.14.0/
+          key: ${{ runner.os }}-qt-5.14.0-${{ github.sha }}
+          
+          
+      - name: Install Qt
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: linux
+          target: desktop
+          arch: gcc_64
+          dir: ${{ runner.temp }}/qt-5.14.0/
+          modules: qtcharts qt3d
+          setup-python: true
+
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.16.x'
+
+      - name: Verify CMake version
+        run: cmake --version
+     
+      - name: print output
+        run: |
+          pwd
+          ls BadgeProject/
+
+      - name: Create build directory
+        run: |
+          mkdir BadgeProject/build
+      
+
+        
+      - name: Configure CMake and build
+        run: |
+          cd BadgeProject/build
+          cmake ..
+          make
+          cd TestP
+          ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
+          cd ..
+          cd ..
+          echo "check test file"
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/TestP/tst_cal_test.cpp
+          echo "check gcno"
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+          echo "check gcno ..."
+          ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
+          pwd
+          tree
+  
