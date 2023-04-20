@@ -49,7 +49,6 @@ jobs:
       - name: print output
         run: |
           pwd
-          echo "------------------------------ "
           ls BadgeProject/
 
       - name: Create build directory
