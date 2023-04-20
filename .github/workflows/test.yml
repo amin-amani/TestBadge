@@ -22,20 +22,20 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/qt-5.14.0/
-          key: ${{ runner.os }}-qt-5.14.0-${{ github.sha }}
+          key: ${{ runner.os }}-qt-5.14.0-744fb7d7d57ae5a63ef33533ad43fba6b2421035 #${{ github.sha }}
           
           
-      - name: Install Qt
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: jurplel/install-qt-action@v2
-        with:
-          version: ${{ env.QT_VERSION }}
-          host: linux
-          target: desktop
-          arch: gcc_64
-          dir: ${{ runner.temp }}/qt-5.14.0/
-          modules: qtcharts qt3d
-          setup-python: true
+#       - name: Install Qt
+#         if: steps.cache.outputs.cache-hit != 'true'
+#         uses: jurplel/install-qt-action@v2
+#         with:
+#           version: ${{ env.QT_VERSION }}
+#           host: linux
+#           target: desktop
+#           arch: gcc_64
+#           dir: ${{ runner.temp }}/qt-5.14.0/
+#           modules: qtcharts qt3d
+#           setup-python: true
 
 
       - name: Setup CMake
