@@ -9,6 +9,7 @@ env:
   SOURCE_DIR: ${{ github.workspace }}
   QT_VERSION: 5.14.0
   ARTIFACT: qt-planets-linux-build.AppImage
+  BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
 
 jobs:
   build:
@@ -51,22 +52,17 @@ jobs:
                export build_command=BadgeProject/build.sh
                source $build_command
                
-#       - name: Configure CMake and build
-#         run: |
-#           cd BadgeProject/build
-#           cmake ..
-#           make
-#           cd TestP
-#           cd ..
-#           cd ..
-#           echo "check test file"
-#           ls /home/runner/work/TestBadge/TestBadge/BadgeProject/TestP/tst_cal_test.cpp
-#           echo "check gcno"
-#           ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
-#           echo "check gcno ..."
-#           ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
-#           pwd
-#           tree
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }}
+      - name: Run sonar-scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
      
       
       - name: Upload artifact
