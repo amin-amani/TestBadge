@@ -50,13 +50,17 @@ jobs:
           mkdir BadgeProject/build
       
 
-        
       - name: Configure CMake and build
         run: |
-          cd BadgeProject/build
-          cmake ..
-          make
-          cd TestP
-          ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
+               export test_command=BadgeProject/test.sh
+               source $test_command
+               
+#       - name: Configure CMake and build
+#         run: |
+#           cd BadgeProject/build
+#           cmake ..
+#           make
+#           cd TestP
+#           ctest -j4 --output-on-failure --extra-verbose --timeout 300 --coverage
 
   
