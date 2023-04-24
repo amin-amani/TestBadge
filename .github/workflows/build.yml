@@ -67,16 +67,7 @@ jobs:
 #           ls /home/runner/work/TestBadge/TestBadge/BadgeProject/build/TestP/CMakeFiles/cal_test.dir/tst_cal_test.cpp.gcno
 #           pwd
 #           tree
-      - name: Run SonarQube analysis
-        uses: sonarsource/sonarqube-scan-action@v1
-        with:
-          sonar-url: 'http://localhost:9000'
-          sonar-login: ${{ secrets.SONAR_TOKEN }}
-          extra-properties: |
-            sonar.projectKey=my-project
-            sonar.projectName=My Project
-            sonar.projectVersion=1.0
-            sonar.sources=BadgeProject    
+     
       
       - name: Upload artifact
         uses: actions/upload-artifact@v2
