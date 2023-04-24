@@ -9,7 +9,7 @@ env:
   SOURCE_DIR: ${{ github.workspace }}
   QT_VERSION: 5.14.0
   ARTIFACT: qt-planets-linux-build.AppImage
-  BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
+  BUILD_WRAPPER_OUT_DIR: BadgeProject/build
 
 jobs:
   build:
