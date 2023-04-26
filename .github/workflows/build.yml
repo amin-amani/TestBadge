@@ -29,7 +29,7 @@ jobs:
           target: desktop
           arch: gcc_64
           dir: ${{ runner.temp }}/qt-5.14.0/
-          modules: qtcharts qt3d
+#           modules: qtcharts qt3d
           setup-python: true
           
           
@@ -52,17 +52,17 @@ jobs:
                export build_command=BadgeProject/build.sh
                source $build_command
                
-#       - name: Install sonar-scanner and build-wrapper
-#         uses: SonarSource/sonarcloud-github-c-cpp@v1
-#       - name: Run build-wrapper
-#         run: |
-#           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }}
-#       - name: Run sonar-scanner
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#         run: |
-#           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }}
+      - name: Run sonar-scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
      
       
       - name: Upload artifact
